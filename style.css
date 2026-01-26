@@ -1,0 +1,30 @@
+/* Style commun */
+body {
+    font-family: Arial, sans-serif;
+    text-align: center;
+    padding-top: 50px;
+}
+
+/* Accueil */
+.page-accueil {
+    background-color: #1e1e1e;
+    color: white;
+}
+
+/* Page 2 */
+.page-2 {
+    background-color: #112c54;
+    color: #fff;
+}
+
+/* Page 3 */
+.page-3 {
+    background-color: #0a270b;
+    color: #fff;
+}
+
+/* Boutons */
+button {
+    padding: 12px 20px;
+    font-size: 16px;
+}
