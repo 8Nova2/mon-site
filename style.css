@@ -45,6 +45,10 @@ button {
     display: flex;
     justify-content: center;
     gap: 20px;
+    position: fixed;
+    top: 0;
+    width: 100%;
+    z-index: 10;
 }
 
 .menu-link {
@@ -101,14 +105,29 @@ button {
   color: white;
 }
 
-.hero img {
+.hero-p4 img {
   width: 100%;
   height: 400px;
   display: block;
   opacity: 40%;
 }
 
-.hero-text {
+.hero-text-p4 {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  color:#a9ff77 
+}
+.hero-accueil img {
+ display: block;
+  max-width: 80%; /* limite la largeur à 80% de l’écran */
+  height: auto;    /* conserve les proportions */
+  margin: 0 auto;  /* centre horizontalement */
+  border-radius: 12px; /* optionnel, style */
+}
+
+.hero-text-accueil {
   position: absolute;
   top: 50%;
   left: 50%;
