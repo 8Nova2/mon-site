@@ -26,3 +26,10 @@ if (bouton4) {
         window.location.href = "page4.html";
     });
 }
+let count = 0;
+document.getElementById("add").addEventListener("click", () => {
+    count++;
+    document.getElementById("count").textContent = count;
+});
+
+
