@@ -134,5 +134,35 @@ button {
   transform: translate(-50%, -50%);
   color:#a9ff77 
 }
-
-
+.credit {
+    font-family: comic, sans-ms;
+    font-size: 15px;
+    text-align: left;
+    bottom: 10px;
+    
+}
+.page {
+  display: flex;
+  flex-direction: column; /* empile verticalement */
+  min-height: 100vh;      /* prend au moins toute la hauteur de l'écran */
+}
+.widget {
+    background: #1e1e1e;
+    padding: 20px;
+    border-radius: 12px;
+    min-width: 250px;
+    max-width: 300px;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.5);
+}
+.dashboard {
+    background: #222;
+    padding: 10px;
+    border-radius: 8px;
+    margin-bottom: 20px;
+}
+.widgets {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 20px;
+}
