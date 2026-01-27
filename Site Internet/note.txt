@@ -1,0 +1,7 @@
+
+     // bouton vers les pages :
+     <button id="btnPage2">Aller à la page 2</button>
+     <button id="btnPage3">Aller à la page 3</button>
+
+lien vers des pages : 
+    <a href="index.html">⬅ Retour à l’accueil</a>
