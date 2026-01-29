@@ -31,7 +31,6 @@ if (bouton4) {
 let count = 0;
 const addBtn = document.getElementById("add");
 const countEl = document.getElementById("count");
-
 if (addBtn && countEl) {
     addBtn.addEventListener("click", () => {
         count++;
@@ -41,7 +40,6 @@ if (addBtn && countEl) {
 
 // ----------- HEURE -----------
 const timeEl = document.getElementById("time");
-
 if (timeEl) {
     function updateTime() {
         const now = new Date();
@@ -51,18 +49,21 @@ if (timeEl) {
     updateTime();
 }
 
-// ----------- CITATION (ZenQuotes corrigé) -----------
+// ----------- CITATION -----------
 const quoteEl = document.getElementById("quote");
 const newQuoteBtn = document.getElementById("newQuote");
 
 if (quoteEl && newQuoteBtn) {
     async function getQuote() {
         try {
-            const res = await fetch("https://api.allorigins.win/raw?url=https://zenquotes.io/api/random" + Date);
+            const res = await fetch(
+                "https://cdn.jsdelivr.net/gh/lukePeavey/quotable@master/data/quotes.json"
+            );
             const data = await res.json();
-            quoteEl.textContent = `"${data[0].q}" — ${data[0].a}`;
+            const random = data[Math.floor(Math.random() * data.length)];
+            quoteEl.textContent = `"${random.content}" — ${random.author}`;
         } catch (err) {
-            quoteEl.textContent = "Impossible de charger la citation.";
+            quoteEl.textContent = "Parce qu'il est le héros que Gotham mérite. Pas celui dont on a besoin aujourd'hui... Alors nous le pourchasserons. Parce qu'il peut l'endurer. Parce que ce n'est pas un héros. C'est un Gardien silencieux... qui veille et protège sans cesse. C'est le Chevalier Noir.";
             console.error(err);
         }
     }
@@ -71,24 +72,46 @@ if (quoteEl && newQuoteBtn) {
     getQuote();
 }
 
-// ----------- METEO (Open-Meteo, SANS CLÉ) -----------
+// ----------- METEO -----------
 const weatherEl = document.getElementById("weather");
+const cityInput = document.getElementById("city");
 const getWeatherBtn = document.getElementById("getWeather");
 
-if (weatherEl && getWeatherBtn) {
+if (weatherEl && cityInput && getWeatherBtn) {
     async function getWeather() {
+        const city = cityInput.value.trim();
+        if (!city) {
+            weatherEl.textContent = "Entre une ville.";
+            return;
+        }
+
         try {
-            const res = await fetch(
-                "https://api.open-meteo.com/v1/forecast?latitude=48.85&longitude=2.35&current_weather=true"
+            // 1. Géocodage
+            const geoRes = await fetch(
+                `https://geocoding-api.open-meteo.com/v1/search?name=${city}&count=1&language=fr`
             );
-            const data = await res.json();
-            weatherEl.textContent = `Paris : ${data.current_weather.temperature}°C`;
+            const geoData = await geoRes.json();
+
+            if (!geoData.results) {
+                weatherEl.textContent = "Ville introuvable.";
+                return;
+            }
+
+            const { latitude, longitude, name, country } = geoData.results[0];
+
+            // 2. Météo
+            const weatherRes = await fetch(
+                `https://api.open-meteo.com/v1/forecast?latitude=${latitude}&longitude=${longitude}&current_weather=true`
+            );
+            const weatherData = await weatherRes.json();
+
+            weatherEl.textContent =
+                `${name}, ${country} : ${weatherData.current_weather.temperature}°C`;
         } catch (err) {
-            weatherEl.textContent = "Impossible de charger la météo.";
+            weatherEl.textContent = "Erreur météo.";
             console.error(err);
         }
     }
 
     getWeatherBtn.addEventListener("click", getWeather);
-    getWeather();
 }
