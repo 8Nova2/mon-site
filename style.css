@@ -193,9 +193,13 @@ button {
             gap:20px;
             width:320px;
         }
-        .widget p {
-            margin:5px 0;
-            font-size:1.2em;
+        .widgetspeed {
+    background: #1e1e1e;
+    padding: 20px;
+    border-radius: 12px;
+    min-width: 250px;
+    max-width: 300px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
         }
         .menu {
     background-color: #111;
@@ -242,6 +246,9 @@ button {
             padding:5px 10px;
             border-radius:6px;
             transition:0.2s;
+        }
+        .menu-link.active.speed, .menu-link:hover {
+            background:#ff6600;
         }
 
         
