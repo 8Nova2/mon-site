@@ -58,7 +58,7 @@ const newQuoteBtn = document.getElementById("newQuote");
 if (quoteEl && newQuoteBtn) {
     async function getQuote() {
         try {
-            const res = await fetch("https://zenquotes.io/api/random");
+            const res = await fetch("https://api.allorigins.win/raw?url=https://zenquotes.io/api/random" + Date);
             const data = await res.json();
             quoteEl.textContent = `"${data[0].q}" — ${data[0].a}`;
         } catch (err) {

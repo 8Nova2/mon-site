@@ -6,46 +6,48 @@
     <link rel="stylesheet" href="style.css">
     <link rel="icon" type="image/png" href="favicon.png">
 </head>
+
 <body class="page-2">
 
-    <h1>Infos en tous genre </h1>
-</body>
-<body>
+    <h1>Infos en tous genre</h1>
 
-<nav class="dashboard">
-    <h1>Widget d'infos basic par API</h1>
-</nav>
+    <nav class="dashboard">
+        <h1>Widget d'infos basic par API</h1>
+    </nav>
 
-<section class="widgets">
+    <section class="widgets">
 
-    <div class="widget" id="weather-widget">
-        <h2>Météo</h2>
-        <p id="weather">Chargement...</p>
-        <input type="text" id="city" placeholder="Entrez une ville">
-        <button id="getWeather">Voir la météo</button>
+        <div class="widget" id="weather-widget">
+            <h2>Météo</h2>
+            <p id="weather">Chargement...</p>
+            <input type="text" id="city" placeholder="Entrez une ville">
+            <button id="getWeather">Voir la météo</button>
+        </div>
+
+        <div class="widget" id="quote-widget">
+            <h2>Citation</h2>
+            <p id="quote">Chargement...</p>
+            <button id="newQuote">Nouvelle citation</button>
+        </div>
+
+        <div class="widget" id="time-widget">
+            <h2>Heure actuelle</h2>
+            <p id="time">--:--:--</p>
+        </div>
+
+    </section>
+
+    <nav class="menu">
+        <a href="index.html" class="menu-link">Accueil</a>
+        <a href="page2.html" class="menu-link active">Page 2</a>
+        <a href="page3.html" class="menu-link">Page 3</a>
+        <a href="page4.html" class="menu-link">Page 4</a>
+    </nav>
+
+    <div class="credit">
+        <p>Credit : Nova</p>
     </div>
 
-    <div class="widget" id="quote-widget">
-        <h2>Citation</h2>
-        <p id="quote">Chargement...</p>
-        <button id="newQuote">Nouvelle citation</button>
-    </div>
-
-    <div class="widget" id="time-widget">
-        <h2>Heure actuelle</h2>
-        <p id="time">--:--:--</p>
-    </div>
-
-</section>
-<nav class="menu">
-    <a href="index.html" class="menu-link">Accueil</a>
-    <a href="page2.html" class="menu-link active">Page 2</a>
-    <a href="page3.html" class="menu-link">Page 3</a>
-    <a href="page4.html" class="menu-link">Page 4</a>
-</nav>
-<div class="credit">
-   <p>Credit : Nova</p> 
-</div>
-<script src="script.js"></script>
+    <script src="script.js"></script>
 </body>
 </html>
