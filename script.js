@@ -31,6 +31,7 @@ if (bouton4) {
 let count = 0;
 const addBtn = document.getElementById("add");
 const countEl = document.getElementById("count");
+
 if (addBtn && countEl) {
     addBtn.addEventListener("click", () => {
         count++;
@@ -40,6 +41,7 @@ if (addBtn && countEl) {
 
 // ----------- HEURE -----------
 const timeEl = document.getElementById("time");
+
 if (timeEl) {
     function updateTime() {
         const now = new Date();
@@ -49,40 +51,44 @@ if (timeEl) {
     updateTime();
 }
 
-// ----------- CITATION -----------
+// ----------- CITATION (ZenQuotes corrigé) -----------
 const quoteEl = document.getElementById("quote");
 const newQuoteBtn = document.getElementById("newQuote");
+
 if (quoteEl && newQuoteBtn) {
     async function getQuote() {
         try {
             const res = await fetch("https://zenquotes.io/api/random");
             const data = await res.json();
-            quoteEl.textContent = `"${data.content}" — ${data.author}`;
+            quoteEl.textContent = `"${data[0].q}" — ${data[0].a}`;
         } catch (err) {
             quoteEl.textContent = "Impossible de charger la citation.";
+            console.error(err);
         }
     }
+
     newQuoteBtn.addEventListener("click", getQuote);
     getQuote();
 }
 
-// ----------- METEO -----------
+// ----------- METEO (Open-Meteo, SANS CLÉ) -----------
 const weatherEl = document.getElementById("weather");
-const cityInput = document.getElementById("city");
 const getWeatherBtn = document.getElementById("getWeather");
-if (weatherEl && cityInput && getWeatherBtn) {
-    const API_KEY = "9c24d79616645e95b610428f9f99a230"; 
+
+if (weatherEl && getWeatherBtn) {
     async function getWeather() {
-        const city = cityInput.value || "Paris";
         try {
-            const res = await fetch(`https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${API_KEY}&units=metric&lang=fr`);
+            const res = await fetch(
+                "https://api.open-meteo.com/v1/forecast?latitude=48.85&longitude=2.35&current_weather=true"
+            );
             const data = await res.json();
-            if(data.cod !== 200) throw new Error(data.message);
-            weatherEl.textContent = `${data.name}: ${data.weather[0].description}, ${data.main.temp}°C`;
+            weatherEl.textContent = `Paris : ${data.current_weather.temperature}°C`;
         } catch (err) {
             weatherEl.textContent = "Impossible de charger la météo.";
             console.error(err);
         }
     }
+
     getWeatherBtn.addEventListener("click", getWeather);
+    getWeather();
 }
