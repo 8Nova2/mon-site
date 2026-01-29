@@ -55,7 +55,7 @@ const newQuoteBtn = document.getElementById("newQuote");
 if (quoteEl && newQuoteBtn) {
     async function getQuote() {
         try {
-            const res = await fetch("https://api.quotable.io/random");
+            const res = await fetch("https://zenquotes.io/api/random");
             const data = await res.json();
             quoteEl.textContent = `"${data.content}" — ${data.author}`;
         } catch (err) {
