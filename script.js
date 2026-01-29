@@ -115,3 +115,135 @@ if (weatherEl && cityInput && getWeatherBtn) {
 
     getWeatherBtn.addEventListener("click", getWeather);
 }
+// =======================
+// TÉLÉMÉTRIE NAVIGATEUR
+// =======================
+
+// 🔋 Batterie
+const batteryEl = document.getElementById("battery");
+if (batteryEl && navigator.getBattery) {
+    navigator.getBattery().then(battery => {
+        function updateBattery() {
+            batteryEl.textContent =
+                `${Math.round(battery.level * 100)}% (marche une fois sur deux)         - ` +
+                (battery.charging ? "En charge" : "Sur batterie");
+        }
+        updateBattery();
+        battery.addEventListener("levelchange", updateBattery);
+        battery.addEventListener("chargingchange", updateBattery);
+    });
+}
+
+// 🌐 Réseau
+const networkEl = document.getElementById("network");
+function updateNetwork() {
+    if (!networkEl) return;
+    const connection = navigator.connection;
+    let text = navigator.onLine ? "En ligne" : "Hors ligne";
+    if (connection) {
+        text += ` | ${connection.effectiveType} | ${connection.downlink} Mb/s`;
+    }
+    networkEl.textContent = text;
+}
+window.addEventListener("online", updateNetwork);
+window.addEventListener("offline", updateNetwork);
+updateNetwork();
+
+// 🖥️ Écran
+const screenEl = document.getElementById("screen");
+function updateScreen() {
+    if (!screenEl) return;
+    screenEl.textContent =
+        `${window.innerWidth} x ${window.innerHeight}px`;
+}
+window.addEventListener("resize", updateScreen);
+updateScreen();
+
+// 🧠 Mémoire JS (Chrome)
+const memoryEl = document.getElementById("memory");
+function updateMemory() {
+    if (!memoryEl) return;
+    if (performance.memory) {
+        const used = Math.round(performance.memory.usedJSHeapSize / 1048576);
+        memoryEl.textContent = `${used} MB utilisés`;
+    } else {
+        memoryEl.textContent = "Non supporté";
+    }
+}
+setInterval(updateMemory, 2000);
+updateMemory();
+
+// ⚡ FPS réel
+const fpsEl = document.getElementById("fps");
+let lastFrame = performance.now();
+let frames = 0;
+
+function fpsLoop(now) {
+    frames++;
+    if (now - lastFrame >= 1000) {
+        fpsEl.textContent = `${frames} FPS`;
+        frames = 0;
+        lastFrame = now;
+    }
+    requestAnimationFrame(fpsLoop);
+}
+if (fpsEl) requestAnimationFrame(fpsLoop);
+
+// =======================
+// SPEEDTEST PAGE 5
+// =======================
+const startBtn = document.getElementById("start");
+const pingEl = document.getElementById("ping");
+const downloadEl = document.getElementById("download");
+const progressFill = document.getElementById("progress");
+
+if (startBtn && pingEl && downloadEl && progressFill) {
+    startBtn.addEventListener("click", async () => {
+        startBtn.disabled = true;
+        pingEl.textContent = "…";
+        downloadEl.textContent = "…";
+        progressFill.style.width = "0%";
+
+        try {
+            // -------- PING --------
+            // Ping simulé avec fichier local
+            const pingStart = performance.now();
+            await fetch("test-file.bin", { cache: "no-store" });
+            const ping = Math.round(performance.now() - pingStart);
+            pingEl.textContent = ping;
+
+
+            // -------- DOWNLOAD --------
+            const fileUrl = "https://speed.cloudflare.com/__down?bytes=5000000"; // 5 MB
+            const startTime = performance.now();
+            const response = await fetch(fileUrl, { cache: "no-store" });
+            const reader = response.body.getReader();
+            const contentLength = +response.headers.get('Content-Length');
+            let receivedLength = 0;
+
+            while(true) {
+                const {done, value} = await reader.read();
+                if (done) break;
+                receivedLength += value.length;
+                const percent = Math.round((receivedLength / contentLength) * 100);
+                progressFill.style.width = percent + "%";
+            }
+
+            const endTime = performance.now();
+            const duration = (endTime - startTime) / 1000;
+            const bitsLoaded = 5_000_000 * 8;
+            const speedMbps = (bitsLoaded / duration / 1_000_000).toFixed(2);
+
+            downloadEl.textContent = speedMbps;
+            progressFill.style.width = "100%";
+
+        } catch (err) {
+            pingEl.textContent = "Erreur";
+            downloadEl.textContent = "Erreur";
+            console.error(err);
+            progressFill.style.width = "0%";
+        }
+
+        startBtn.disabled = false;
+    });
+}
