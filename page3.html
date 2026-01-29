@@ -2,22 +2,55 @@
 <html lang="fr">
 <head>
     <meta charset="UTF-8">
-    <title>//</title>
+    <title>Télémétrie</title>
     <link rel="stylesheet" href="style.css">
-    <link rel="icon" type="image/png" href="favicon.png">
 </head>
+
 <body class="page-3">
 
-    <h1>la page 3 📄</h1>
-    <p>✨</p>
-</body>
+<nav class="dashboard">
+    <h1>Télémétrie navigateur (temps réel)</h1>
+</nav>
+
+<section class="widgets telemetry">
+
+    <div class="widget">
+        <h2>🔋 Batterie</h2>
+        <p id="battery">Non supporté</p>
+    </div>
+
+    <div class="widget">
+        <h2>🌐 Réseau</h2>
+        <p id="network">—</p>
+    </div>
+
+    <div class="widget">
+        <h2>🖥️ Écran</h2>
+        <p id="screen">—</p>
+    </div>
+
+    <div class="widget">
+        <h2>🧠 Mémoire JS</h2>
+        <p id="memory">—</p>
+    </div>
+
+    <div class="widget">
+        <h2>⚡ FPS</h2>
+        <p id="fps">—</p>
+    </div>
+
+</section>
+
 <nav class="menu">
     <a href="index.html" class="menu-link">Accueil</a>
-    <a href="page2.html" class="menu-link">Page 2</a>
+    <a href="page2.html" class="menu-link">Page 2 (widget)</a>
     <a href="page3.html" class="menu-link active">Page 3</a>
-    <a href="page4.html" class="menu-link">Page 4</a>
+    <a href="page4.html" class="menu-link">Page 4 (labo)</a>
 </nav>
 <div class="credit">
    <p>Credit : Nova</p> 
 </div>
+
+<script src="script.js"></script>
+</body>
 </html>
